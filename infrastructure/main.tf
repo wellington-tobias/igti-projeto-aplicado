@@ -1,3 +1,4 @@
+/*
 # Criação do Datalake - S3
 resource "aws_s3_bucket" "bucket-pa" {
   # Parâmetros de configuração
@@ -11,7 +12,7 @@ resource "aws_s3_bucket_object" "arquivo_simples_simei" {
   source = "../F.K03200$W.SIMPLES.CSV.D20312.csv"
   etag   = filemd5("../F.K03200$W.SIMPLES.CSV.D20312.csv")
 }
-*/
+
 # Criação do Elasticsearch - OpenSearch Service
 resource "aws_elasticsearch_domain" "es" {
   domain_name           = var.domain
@@ -52,3 +53,4 @@ resource "aws_db_instance" "default" {
   skip_final_snapshot  = true
   publicly_accessible  = true
 }
+*/
