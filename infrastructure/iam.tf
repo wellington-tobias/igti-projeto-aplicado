@@ -17,11 +17,6 @@ resource "aws_iam_role" "lambda" {
 }
 EOF
 
-  tags = {
-    IES   = "IGTI",
-    CURSO = "EDC"
-  }
-
 }
 
 
@@ -60,8 +55,8 @@ resource "aws_iam_policy" "lambda" {
         },
         {
           "Action": "iam:PassRole",
-          "Resource": ["arn:aws:iam::127012818163:role/EMR_DefaultRole",
-                       "arn:aws:iam::127012818163:role/EMR_EC2_DefaultRole"],
+          "Resource": ["arn:aws:iam::184684572956:role/EMR_DefaultRole",
+                       "arn:aws:iam::184684572956:role/EMR_EC2_DefaultRole"],
           "Effect": "Allow"
         }
     ]
