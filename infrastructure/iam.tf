@@ -17,6 +17,11 @@ resource "aws_iam_role" "lambda" {
 }
 EOF
 
+  tags = {
+    IES   = "IGTI",
+    CURSO = "EDC"
+  }
+
 }
 
 
