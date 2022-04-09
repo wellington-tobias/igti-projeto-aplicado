@@ -30,10 +30,10 @@ def handler(event, context):
                             'InstanceCount': 1,
                         }
                     ],
-                    'Ec2KeyName': 'ney-igti-teste',
+                    'Ec2KeyName': 'igti-projeto-aplicado',
                     'KeepJobFlowAliveWhenNoSteps': True,
                     'TerminationProtected': False,
-                    'Ec2SubnetId': 'subnet-1df20360'
+                    'Ec2SubnetId': 'subnet-015427cbee5e48d32'
                 },
 
                 Applications=[
@@ -56,7 +56,13 @@ def handler(event, context):
                             "PYSPARK_DRIVER_PYTHON": "/usr/bin/python3"
                         }
                     }]
-                },                   
+                },
+                    {
+                        "Classification": "spark-hive-site",
+                        "Properties": {
+                            "hive.metastore.client.factory.class": "com.amazonaws.glue.catalog.metastore.AWSGlueDataCatalogHiveClientFactory"
+                        }
+                    },
                     {
                         "Classification": "spark-defaults",
                         "Properties": {
@@ -77,7 +83,7 @@ def handler(event, context):
                 StepConcurrencyLevel=1,
                 
                 Steps=[{
-                    'Name': 'Insert SIMPLES/SIMEI',
+                    'Name': 'Tratamento Dados Simples/Simei',
                     'ActionOnFailure': 'CONTINUE',
                     'HadoopJarStep': {
                         'Jar': 'command-runner.jar',
@@ -87,7 +93,7 @@ def handler(event, context):
                                  '--conf', 'spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog', 
                                  '--master', 'yarn',
                                  '--deploy-mode', 'cluster',
-                                 's3://datalake-ney-igti-edc-tf/emr-code/pyspark/01_delta_spark_insert.py'
+                                 's3://datalake-projeto-aplicado/emr-code/pyspark/job_spark.py'
                                  ]
                     }
                 }
