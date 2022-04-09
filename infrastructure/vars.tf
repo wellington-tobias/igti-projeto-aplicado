@@ -20,5 +20,5 @@ variable "ebs_volume_size" {}
 
 # Variáveis Lambda
 variable "lambda_function_name" {
-    default = "ExecutaAtualizacao"
+    default = "ExecutaEMR"
 }
