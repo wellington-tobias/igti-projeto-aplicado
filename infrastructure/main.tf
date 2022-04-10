@@ -47,8 +47,8 @@ resource "aws_db_instance" "default" {
   identifier           =  "projeto-aplicado"     
   engine_version       = "13"
   instance_class       = "db.t3.micro"
-  db_name              = "db_pa"
-  username             = "pgadmin"
+  db_name              = "pg_projeto-aplicado"
+  username             = "postgres"
   password             = "random_string.pg-db-password.result"
   skip_final_snapshot  = true
   publicly_accessible  = true
