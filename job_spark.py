@@ -49,5 +49,5 @@ df_completo = (
     .write
     .mode("overwrite")
     .format("csv")
-    .save("s3://datalake-projeto-aplicado/staging/amostra.csv")
+    .save("s3://datalake-projeto-aplicado/staging/")
 )
