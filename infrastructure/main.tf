@@ -44,7 +44,7 @@ resource "random_string" "pg-db-password" {
 resource "aws_db_instance" "default" {
   allocated_storage    = 20
   engine               = "postgres"
-  identifier           =  "projeto-aplicado"     
+  identifier           =  "igti-projeto-aplicado"     
   engine_version       = "13"
   instance_class       = "db.t3.micro"
   db_name              = "pg_projeto_aplicado"
