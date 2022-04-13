@@ -22,3 +22,16 @@ variable "ebs_volume_size" {}
 variable "lambda_function_name" {
     default = "ExecutaEMR"
 }
+
+# Variáveis - EC2
+variable "key_pair_name" {
+    default = "igti-projeto-aplicado"
+}
+
+variable "airflow_subnet_id" {
+    default = "subnet-08c574adfdb9b16ec"
+}
+
+variable "vpc_id" {
+    default = "vpc-0c0cad633fa9efa3f"
+}
