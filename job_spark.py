@@ -29,10 +29,10 @@ simples = (
     .option("header", False)
     .schema(schema)
     .option("delimiter", ";")
-    .load("s3://datalake-projeto-aplicado/raw/amostra.csv")
+    .load("s3://datalake-projeto-aplicado/raw/F.K03200$W.SIMPLES.CSV.D20312.csv")
 )
 
-# DataFrame com colunas de data, convertidas para Date
+# Dataframe contendo colunas convertidas e nova coluna
 df_completo = (
     simples
     .withColumn('dt_opcao_simples', to_date(col('dt_opcao_simples'),'yyyyMMdd'))
@@ -48,6 +48,6 @@ df_completo = (
     df_completo
     .write
     .mode("overwrite")
-    .format("csv")
+    .format("parquet")
     .save("s3://datalake-projeto-aplicado/staging/")
 )
