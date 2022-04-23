@@ -6,7 +6,7 @@ provider "aws" {
 # Centralização do controle de estado do Terraform
 terraform {
   backend "s3" {
-    bucket = "terraform-pa"
+    bucket = "terraform-projeto-aplicado"
     key = "state/pa/terraform.tfstate"
     region = "us-east-2"
   }
