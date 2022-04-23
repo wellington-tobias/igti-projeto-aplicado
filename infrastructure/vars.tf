@@ -18,11 +18,6 @@ variable "volume_type" {
 }
 variable "ebs_volume_size" {}
 
-# Variáveis Lambda
-variable "lambda_function_name" {
-    default = "ExecutaEMR"
-}
-
 # Variáveis - EC2
 variable "key_pair_name" {
     default = "igti-projeto-aplicado"
