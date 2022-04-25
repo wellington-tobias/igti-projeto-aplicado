@@ -117,23 +117,23 @@ def pipeline_simples_simei():
         return cluster_id["JobFlowId"]
 
 
-    @task
-    def wait_emr_step(cid: str):
-        waiter = client.get_waiter('step_complete')
-        steps = client.list_steps(
-            ClusterId=cid
-        )
-        stepId = steps['Steps'][0]['Id']
+    # @task
+    # def wait_emr_step(cid: str):
+    #     waiter = client.get_waiter('step_complete')
+    #     steps = client.list_steps(
+    #         ClusterId=cid
+    #     )
+    #     stepId = steps['Steps'][0]['Id']
 
-        waiter.wait(
-            ClusterId=cid,
-            StepId=stepId,
-            WaiterConfig={
-                'Delay': 30,
-                'MaxAttempts': 120
-            }
-        )
-        return True
+    #     waiter.wait(
+    #         ClusterId=cid,
+    #         StepId=stepId,
+    #         WaiterConfig={
+    #             'Delay': 30,
+    #             'MaxAttempts': 120
+    #         }
+    #     )
+    #     return True
 
     @task
     def insert_postgres(cid: str, success_before: bool):
@@ -158,19 +158,19 @@ def pipeline_simples_simei():
             )
             return newstep['StepIds'][0]
 
-    @task
-    def wait_insert_postgres(cid: str, stepId: str):
-        waiter = client.get_waiter('step_complete')
+    # @task
+    # def wait_insert_postgres(cid: str, stepId: str):
+    #     waiter = client.get_waiter('step_complete')
 
-        waiter.wait(
-            ClusterId=cid,
-            StepId=stepId,
-            WaiterConfig={
-                'Delay': 30,
-                'MaxAttempts': 120
-            }
-        )
-        return True
+    #     waiter.wait(
+    #         ClusterId=cid,
+    #         StepId=stepId,
+    #         WaiterConfig={
+    #             'Delay': 30,
+    #             'MaxAttempts': 120
+    #         }
+    #     )
+    #     return True
 
     @task
     def insert_elasticsearch(cid: str, success_before: bool):
@@ -195,19 +195,19 @@ def pipeline_simples_simei():
             )
             return newstep['StepIds'][0]
 
-    @task
-    def wait_insert_elasticsearch(cid: str, stepId: str):
-        waiter = client.get_waiter('step_complete')
+    # @task
+    # def wait_insert_elasticsearch(cid: str, stepId: str):
+    #     waiter = client.get_waiter('step_complete')
 
-        waiter.wait(
-            ClusterId=cid,
-            StepId=stepId,
-            WaiterConfig={
-                'Delay': 30,
-                'MaxAttempts': 120
-            }
-        )
-        return True
+    #     waiter.wait(
+    #         ClusterId=cid,
+    #         StepId=stepId,
+    #         WaiterConfig={
+    #             'Delay': 30,
+    #             'MaxAttempts': 120
+    #         }
+    #     )
+    #     return True
 
     @task
     def terminate_emr_cluster(success_before: str, cid: str):
@@ -218,11 +218,13 @@ def pipeline_simples_simei():
 
 
     # Encadeando a pipeline
-    cluid = emr_process_raw_data()
-    res_emr = wait_emr_step(cluid)
-    newstep = insert_postgres(cluid, res_emr)
-    res_ba = wait_insert_postgres(cluid, newstep)
-    res_ter = terminate_emr_cluster(res_ba, cluid)
+    # cluid = emr_process_raw_data()
+    # res_emr = wait_emr_step(cluid)
+    # newstep = insert_postgres(cluid, res_emr)
+    # res_ba = wait_insert_postgres(cluid, newstep)
+    # res_ter = terminate_emr_cluster(res_ba, cluid)
+
+    emr_process_raw_data() >> [insert_postgres() >> insert_elasticsearch()] >> terminate_emr_cluster()
 
 
 execucao = pipeline_simples_simei()
