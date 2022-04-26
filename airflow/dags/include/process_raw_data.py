@@ -1,6 +1,5 @@
 # Importação Bibliotecas
-import awswrangler as wr
-import boto3
+import awswrangler as wr    
 import pandas as pd
 from datetime import datetime
 
