@@ -3,6 +3,7 @@ from opensearchpy import OpenSearch, RequestsHttpConnection
 from requests_aws4auth import AWS4Auth
 import boto3
 import awswrangler as wr
+import pandas as pd
 
 # Dados para conexão
 host = 'search-igti-projeto-aplicado-zsn2tt2u3zhcj37wq4faqqpofe.us-east-2.es.amazonaws.com'
@@ -23,11 +24,10 @@ search = OpenSearch(
 )
 
 # delete index if exists
-# wr.opensearch.delete_index(
-#     client=search,
-#     index="pessoa_juridica_simples_simei"
-    
-# )
+wr.opensearch.delete_index(
+    client=search,
+    index="pessoa_juridica_simples_simei"
+)
 
 # Criação do Índice
 wr.opensearch.create_index(
@@ -40,7 +40,7 @@ wr.opensearch.create_index(
                    "match" : "dt*",
                     "mapping" : {
                         "type" : "date",
-                        "format" : 'yyyy-MM-dd'
+                        "format" : 'dateOptionalTime'
                     }
                 }
             }
@@ -50,8 +50,12 @@ wr.opensearch.create_index(
 
 # Leitura e tratamento para inserção no Elasticsearch
 
+# Dados S3
+s3_bucket_name = 'datalake-projeto-aplicado'
+s3_path_origin = 'staging/'
+
 # Colunas
-column_name = [
+column_names = [
     'nr_cnpj_radical', 
     'flag_simples', 
     'dt_opcao_simples', 
@@ -63,22 +67,20 @@ column_name = [
 ]
 
 # Leitura
-df_file = pd.read_csv(
-    f"s3://{s3_bucket_name}/{s3_file}",
-    names = column_name#, 
-    #parse_dates=['dt_opcao_simples','dt_exclusao_simples','dt_opcao_mei','dt_exclusao_mei','dt_atualizacao']
+df_elastic = wr.s3.read_parquet(
+    f"s3://{s3_bucket_name}/{s3_path_origin}", 
+    columns=column_names
 )
 
-# Tratamento
-df_file = (
-    df_file
-    .replace({np.nan: None})
-)
+# Conversão Colunas de Data
+cols = ['dt_opcao_simples','dt_exclusao_simples','dt_opcao_mei','dt_exclusao_mei','dt_atualizacao']
+df_elastic[cols] = df_elastic[cols].apply(pd.to_datetime, errors='coerce', format='%Y%m%d')
+
 
 # Inserir dados do Dataframe
 wr.opensearch.index_df(
     search,
-    df=df_file,
+    df=df_elastic,
     index="pessoa_juridica_simples_simei",
-    bulk_size=1000
+    bulk_size=1000000
 )
