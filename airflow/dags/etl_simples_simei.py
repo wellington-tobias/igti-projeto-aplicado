@@ -1,14 +1,15 @@
-# Bibliotecas
 from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
+from airflow.operators.python_operator import PythonOperator
 from airflow.utils.dates import days_ago
+import boto3
 from airflow.models import Variable
 
-# Chaves AWS
 aws_access_key_id = Variable.get("aws_access_key_id")
 aws_secret_access_key = Variable.get("aws_secret_access_key")
 
-# Argumentos DAG
+s3client = boto3.client("s3", aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
+
 default_args = {
     'owner': 'Wellington Tobias',
     "depends_on_past": False,
@@ -17,6 +18,7 @@ default_args = {
     "email_on_failure": False,
     "email_on_retry": False
 }
+
 
 with DAG(
     dag_id='python-scripts',
@@ -40,3 +42,4 @@ with DAG(
     )
 
     process_raw_data >> [insert_postgres, insert_elasticseach]
+    
