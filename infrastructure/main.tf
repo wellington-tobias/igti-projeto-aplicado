@@ -1,9 +1,9 @@
 
-# Criação do Datalake - S3
- resource "aws_s3_bucket" "bucket-pa" {
-  # Parâmetros de configuração
-  bucket = var.bucket
- }
+# # Criação do Datalake - S3
+#  resource "aws_s3_bucket" "bucket-pa" {
+#   # Parâmetros de configuração
+#   bucket = var.bucket
+#  }
 /*
 # Envio de arquivo para o bucket
 resource "aws_s3_bucket_object" "arquivo_simples_simei" {
