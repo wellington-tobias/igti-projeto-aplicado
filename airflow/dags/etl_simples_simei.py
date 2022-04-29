@@ -21,7 +21,7 @@ default_args = {
 
 
 with DAG(
-    dag_id='python-scripts',
+    dag_id='ETL-Simples-Simei',
     description="Processamento Simples/Simei Dados Abertos",
     default_args=default_args, 
     schedule_interval=None, 

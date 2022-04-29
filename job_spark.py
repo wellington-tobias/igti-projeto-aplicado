@@ -48,6 +48,6 @@ df_completo = (
     df_completo
     .write
     .mode("overwrite")
-    .format("csv")
+    .format("parquet")
     .save("s3://datalake-projeto-aplicado/staging/")
 )

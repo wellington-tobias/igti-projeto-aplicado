@@ -5,7 +5,7 @@ from datetime import datetime
 
 # Dados S3
 s3_bucket_name = 'datalake-projeto-aplicado'
-s3_file_origin = 'raw/amostra.csv'
+s3_file_origin = 'raw/F.K03200$W.SIMPLES.CSV.D20312.csv'
 s3_path_destiny = 'staging/'
 
 # Colunas

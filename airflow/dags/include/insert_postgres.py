@@ -38,7 +38,7 @@ conn = pg8000.connect(
     host="igti-projeto-aplicado.c1t9xo1yxfi6.us-east-2.rds.amazonaws.com",
     database="pg_projeto_aplicado",
     port=5432,
-    password="oUVaT34DxFJc"
+    password="insert-password-here"
 )
 
 # transfer data from DataFrame to PostgreSQL table
